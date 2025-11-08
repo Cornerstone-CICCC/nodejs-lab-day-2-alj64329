@@ -1,0 +1,50 @@
+{
+    "sourceFile": "backend/src/models/user.model.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1762534056489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762534384175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,35 +6,39 @@\n class UserModel {\r\n   private users: User[] = []\r\n \r\n   // Create user\r\n-  async createUser(newUser: Omit<User, 'id'>) {\r\n-    const { username, password } = newUser\r\n+  async create(newUser: Omit<User, 'id'>) {\r\n+    const { username, password, firstname, lastname } = newUser\r\n     const foundIndex = this.users.findIndex(\r\n       u => u.username.toLowerCase() === username.toLowerCase()\r\n     )\r\n     if (foundIndex !== -1) return false\r\n     const hashedPassword = await bcrypt.hash(password, 12)\r\n     this.users.push({\r\n       id: uuidv4(),\r\n       username,\r\n-      password: hashedPassword\r\n+      password: hashedPassword,\r\n+      firstname,\r\n+      lastname\r\n     })\r\n     return true\r\n   }\r\n \r\n   // Check user\r\n-  async loginUser(details: Omit<User, 'id'>) {\r\n+  async login(details: Partial<User>) {\r\n     const { username, password } = details\r\n     const found = this.users.find(u => u.username === username)\r\n     if (!found) return false\r\n+    if(!password) return false\r\n+    \r\n     const isMatch = await bcrypt.compare(password, found.password)\r\n     if (!isMatch) return false\r\n     return found\r\n   }\r\n \r\n   // Get user data\r\n-  getUser(username: string) {\r\n+  findByUsername(username: string) {\r\n     const user = this.users.find(u => u.username === username)\r\n     if (!user) return false\r\n     return user\r\n   }\r\n"
+                },
+                {
+                    "date": 1762573618751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \r\n   // Check user\r\n   async login(details: Partial<User>) {\r\n     const { username, password } = details\r\n-    const found = this.users.find(u => u.username === username)\r\n+    const found = this.users.find(u => u.username.toLowerCase() === username?.toLowerCase())\r\n     if (!found) return false\r\n     if(!password) return false\r\n     \r\n     const isMatch = await bcrypt.compare(password, found.password)\r\n"
+                },
+                {
+                    "date": 1762573674915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n \r\n   // Check user\r\n   async login(details: Partial<User>) {\r\n     const { username, password } = details\r\n+    console.log(details)\r\n     const found = this.users.find(u => u.username.toLowerCase() === username?.toLowerCase())\r\n     if (!found) return false\r\n     if(!password) return false\r\n     \r\n"
+                },
+                {
+                    "date": 1762573753778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,14 +26,15 @@\n \r\n   // Check user\r\n   async login(details: Partial<User>) {\r\n     const { username, password } = details\r\n-    console.log(details)\r\n     const found = this.users.find(u => u.username.toLowerCase() === username?.toLowerCase())\r\n     if (!found) return false\r\n     if(!password) return false\r\n+    console.log(found)\r\n     \r\n     const isMatch = await bcrypt.compare(password, found.password)\r\n+    console.log(isMatch)\r\n     if (!isMatch) return false\r\n     return found\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1762573785357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,11 +27,12 @@\n   // Check user\r\n   async login(details: Partial<User>) {\r\n     const { username, password } = details\r\n     const found = this.users.find(u => u.username.toLowerCase() === username?.toLowerCase())\r\n+    console.log(found)\r\n     if (!found) return false\r\n     if(!password) return false\r\n-    console.log(found)\r\n+\r\n     \r\n     const isMatch = await bcrypt.compare(password, found.password)\r\n     console.log(isMatch)\r\n     if (!isMatch) return false\r\n"
+                },
+                {
+                    "date": 1762573803143,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n   // Check user\r\n   async login(details: Partial<User>) {\r\n     const { username, password } = details\r\n     const found = this.users.find(u => u.username.toLowerCase() === username?.toLowerCase())\r\n-    console.log(found)\r\n+    console.log(this.users)\r\n     if (!found) return false\r\n     if(!password) return false\r\n \r\n     \r\n"
+                },
+                {
+                    "date": 1762574056122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,8 +41,9 @@\n \r\n   // Get user data\r\n   findByUsername(username: string) {\r\n     const user = this.users.find(u => u.username === username)\r\n+    console.log(this.users)\r\n     if (!user) return false\r\n     return user\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1762574240018,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,50 @@\n+\r\n+import bcrypt from 'bcrypt'\r\n+import { v4 as uuidv4 } from 'uuid'\r\n+import { User } from '../types/user'\r\n+\r\n+class UserModel {\r\n+  private users: User[] = []\r\n+\r\n+  // Create user\r\n+  async create(newUser: Omit<User, 'id'>) {\r\n+    const { username, password, firstname, lastname } = newUser\r\n+    const foundIndex = this.users.findIndex(\r\n+      u => u.username.toLowerCase() === username.toLowerCase()\r\n+    )\r\n+    if (foundIndex !== -1) return false\r\n+    const hashedPassword = await bcrypt.hash(password, 12)\r\n+    this.users.push({\r\n+      id: uuidv4(),\r\n+      username,\r\n+      password: hashedPassword,\r\n+      firstname,\r\n+      lastname\r\n+    })\r\n+    return true\r\n+  }\r\n+\r\n+  // Check user\r\n+  async login(details: Partial<User>) {\r\n+    const { username, password } = details\r\n+    const found = this.users.find(u => u.username.toLowerCase() === username?.toLowerCase())\r\n+    console.log(this.users)\r\n+    if (!found) return false\r\n+    if(!password) return false\r\n+\r\n+    \r\n+    const isMatch = await bcrypt.compare(password, found.password)\r\n+    console.log(isMatch)\r\n+    if (!isMatch) return false\r\n+    return found\r\n+  }\r\n+\r\n+  // Get user data\r\n+  findByUsername(username: string) {\r\n+    const user = this.users.find(u => u.username === username)\r\n+    if (!user) return false\r\n+    return user\r\n+  }\r\n+}\r\n+\r\n+export default new UserModel\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1762534056489,
+            "name": "Commit-0",
+            "content": "\r\nimport bcrypt from 'bcrypt'\r\nimport { v4 as uuidv4 } from 'uuid'\r\nimport { User } from '../types/user'\r\n\r\nclass UserModel {\r\n  private users: User[] = []\r\n\r\n  // Create user\r\n  async createUser(newUser: Omit<User, 'id'>) {\r\n    const { username, password } = newUser\r\n    const foundIndex = this.users.findIndex(\r\n      u => u.username.toLowerCase() === username.toLowerCase()\r\n    )\r\n    if (foundIndex !== -1) return false\r\n    const hashedPassword = await bcrypt.hash(password, 12)\r\n    this.users.push({\r\n      id: uuidv4(),\r\n      username,\r\n      password: hashedPassword\r\n    })\r\n    return true\r\n  }\r\n\r\n  // Check user\r\n  async loginUser(details: Omit<User, 'id'>) {\r\n    const { username, password } = details\r\n    const found = this.users.find(u => u.username === username)\r\n    if (!found) return false\r\n    const isMatch = await bcrypt.compare(password, found.password)\r\n    if (!isMatch) return false\r\n    return found\r\n  }\r\n\r\n  // Get user data\r\n  getUser(username: string) {\r\n    const user = this.users.find(u => u.username === username)\r\n    if (!user) return false\r\n    return user\r\n  }\r\n}\r\n\r\nexport default new UserModel"
+        }
+    ]
+}

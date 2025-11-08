@@ -1,0 +1,75 @@
+---
+
+---
+
+<div class="form-container">
+  <h2>Sign Up</h2>
+  <form id="form-signup">
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <div class="name-inputs">
+      <input type="text" name="firstname" placeholder="First name" required />
+      <input type="text" name="lastname" placeholder="Last name" required />
+    </div>
+    <button type="submit">Create Account</button>
+  </form>
+  <script>
+    const signUpForm = document.getElementById(
+      "form-signup"
+    ) as HTMLFormElement;
+    signUpForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(signUpForm);
+      const username = formData.get("username");
+      const password = formData.get("password");
+      const firstname = formData.get("firstname");
+      const lastname = formData.get("lastname");
+
+      try {
+        const res = await fetch("http://localhost:3000/users/signup", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+            firstname,
+            lastname,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          // Check if status is not success (400, 500, ...)
+          console.error(data.message);
+          return;
+        }
+        alert("Success! You can now log in!");
+        signUpForm.reset();
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+</div>
+
+<style>
+  .form-container {
+    padding-top: 5rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  #form-signup {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 1rem;
+  }
+  h2 {
+    text-align: center;
+  }
+</style>

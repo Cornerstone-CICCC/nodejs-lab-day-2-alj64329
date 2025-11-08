@@ -1,0 +1,26 @@
+{
+    "sourceFile": "frontend/src/pages/login.astro",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1762538005724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762538633408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,78 @@\n ---\n import LoginForm from \"../components/LoginForm.astro\";\n import Welcome from \"../components/Welcome.astro\";\n import Layout from \"../layouts/Layout.astro\";\n+import Header from \"../components/Header.astro\";\n \n // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\n // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\n ---\n \n <Layout>\n-  <LoginForm />\n+  <body>\n+    <Header />\n+    <div class=\"form-container\">\n+  <h2>Log in</h2>\n+  <form id=\"form-login\">\n+    <input type=\"text\" name=\"username\" placeholder=\"Username\" required />\n+    <input type=\"password\" name=\"password\" placeholder=\"Password\" required />\n+    <button type=\"submit\">Log in</button>\n+  </form>\n+</div>\n+  <script>\n+    // Login\n+    const loginForm = document.getElementById(\"form-login\") as HTMLFormElement;\n+    loginForm.addEventListener(\"submit\", async (e) => {\n+      e.preventDefault();\n+      const formData = new FormData(loginForm);\n+      const username = formData.get(\"username\");\n+      const password = formData.get(\"password\");\n+\n+      try {\n+        const res = await fetch(\"http://localhost:3500/users/login\", {\n+          method: \"POST\",\n+          credentials: \"include\", // include cookies\n+          headers: {\n+            \"Content-type\": \"application/json\",\n+          },\n+          body: JSON.stringify({\n+            username,\n+            password,\n+          }),\n+        });\n+        const data = await res.json();\n+        if (!res.ok) {\n+          console.error(data.message);\n+          return;\n+        }\n+        window.location.href = \"/profile\"; // Redirect to profile page\n+      } catch (err) {\n+        // Server is down\n+        console.error(err);\n+      }\n+    });\n+  </script>\n+\n+  </body>\n </Layout>\n+\n+<style>\n+  .form-container {\n+    padding-top: 5rem;\n+    display: flex;\n+    justify-content: center;\n+    flex-direction: column;\n+  }\n+\n+  #form-login {\n+    width: fit-content;\n+    display: flex;\n+    flex-direction: column;\n+    justify-content: center;\n+    margin: 0 auto;\n+    gap: 1rem;\n+  }\n+  h2 {\n+    text-align: center;\n+  }\n+</style>\n"
+                },
+                {
+                    "date": 1762538884830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,17 @@\n \n // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\n // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\n ---\n-\n-<Layout>\n+<!doctype html>\n+<html lang=\"en\">\n+  <head>\n+    <meta charset=\"UTF-8\" />\n+    <meta name=\"viewport\" content=\"width=device-width\" />\n+    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\" />\n+    <meta name=\"generator\" content={Astro.generator} />\n+    <title>Astro Basics</title>\n+  </head>\n   <body>\n     <Header />\n     <div class=\"form-container\">\n       <h2>Log in</h2>\n@@ -59,9 +66,9 @@\n         }\n       });\n     </script>\n   </body>\n-</Layout>\n+</html>\n \n <style>\n   .form-container {\n     padding-top: 5rem;\n"
+                }
+            ],
+            "date": 1762538005724,
+            "name": "Commit-0",
+            "content": "---\nimport LoginForm from '../components/LoginForm.astro';\nimport Welcome from '../components/Welcome.astro';\nimport Layout from '../layouts/Layout.astro';\n\n// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\n// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\n---\n\n<Layout>\n    <LoginForm/>\n</Layout>\n"
+        }
+    ]
+}

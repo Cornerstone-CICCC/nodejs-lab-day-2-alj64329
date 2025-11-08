@@ -1,0 +1,26 @@
+{
+    "sourceFile": "backend/src/middleware/auth.middleware.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1762535750791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762573945026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { Request, Response, NextFunction } from 'express'\r\n \r\n export const checkLogin = (req:Request, res:Response, next:NextFunction)=>{\r\n+    console.log(req.s)\r\n     if(!req.session || !req.session.usernam){\r\n         res.status(401).json({\r\n             message: \"You are not allowed to access this!\"\r\n         })\r\n"
+                },
+                {
+                    "date": 1762573969132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,22 @@\n+import { Request, Response, NextFunction } from 'express'\r\n+\r\n+export const checkLogin = (req:Request, res:Response, next:NextFunction)=>{\r\n+    console.log(req.session)\r\n+    if(!req.session || !req.session.username){\r\n+        res.status(401).json({\r\n+            message: \"You are not allowed to access this!\"\r\n+        })\r\n+        return\r\n+    }\r\n+    next()\r\n+}\r\n+\r\n+export const checkLogout = (req:Request, res:Response, next:NextFunction)=>{\r\n+    if(req.session && req.session.username){\r\n+        res.status(500).json({\r\n+            message:\"You are already logged in!\"\r\n+        })\r\n+        return\r\n+    }\r\n+    next()\r\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1762535750791,
+            "name": "Commit-0",
+            "content": "import { Request, Response, NextFunction } from 'express'\r\n\r\nexport const checkLogin = (req:Request, res:Response, next:NextFunction)=>{\r\n    if(!req.session || !req.session.usernam){\r\n        res.status(401).json({\r\n            message: \"You are not allowed to access this!\"\r\n        })\r\n        return\r\n    }\r\n    next()\r\n}\r\n\r\nexport const checkLogout = (req:Request, res:Response, next:NextFunction)=>{\r\n    if(req.session && req.session.username){\r\n        res.status(500).json({\r\n            message:\"You are already logged in!\"\r\n        })\r\n        return\r\n    }\r\n    next()\r\n}"
+        }
+    ]
+}

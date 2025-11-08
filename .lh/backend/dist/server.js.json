@@ -1,0 +1,22 @@
+{
+    "sourceFile": "backend/dist/server.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1762540202203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762540322369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,12 +18,12 @@\n     throw new Error(\"Missing cookie keys!\");\n }\n app.use((0, cookie_session_1.default)({\n     name: \"session\",\n-    // keys: [\n-    //     process.env.COOKIE_PRIMARY_KEY,\n-    //     process.env.COOKIE_SECONDARY_KEY\n-    // ],\n+    keys: [\n+        process.env.COOKIE_PRIMARY_KEY,\n+        process.env.COOKIE_SECONDARY_KEY\n+    ],\n     maxAge: 3 * 60 * 1000 // 3 mins\n }));\n app.use(express_1.default.json()); // Allow and parse JSON body\n // Routes\n"
+                }
+            ],
+            "date": 1762540202203,
+            "name": "Commit-0",
+            "content": "\"use strict\";\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst express_1 = __importDefault(require(\"express\"));\nconst cors_1 = __importDefault(require(\"cors\"));\nconst cookie_session_1 = __importDefault(require(\"cookie-session\"));\nconst dotenv_1 = __importDefault(require(\"dotenv\"));\nconst user_routes_1 = __importDefault(require(\"./routes/user.routes\"));\ndotenv_1.default.config();\nconst app = (0, express_1.default)();\napp.use((0, cors_1.default)({\n    origin: true, // Astro url\n    credentials: true // Allow cookies from frontend\n}));\nif (!process.env.COOKIE_PRIMARY_KEY || !process.env.COOKIE_SECONDARY_KEY) {\n    throw new Error(\"Missing cookie keys!\");\n}\napp.use((0, cookie_session_1.default)({\n    name: \"session\",\n    // keys: [\n    //     process.env.COOKIE_PRIMARY_KEY,\n    //     process.env.COOKIE_SECONDARY_KEY\n    // ],\n    maxAge: 3 * 60 * 1000 // 3 mins\n}));\napp.use(express_1.default.json()); // Allow and parse JSON body\n// Routes\napp.use('/users', user_routes_1.default);\napp.use((req, res, next) => {\n    res.status(404).json({\n        message: \"Invalid route!\"\n    });\n});\n// Start server\nconst PORT = process.env.PORT;\nif (!PORT) {\n    throw new Error(\"Missing port!\");\n}\napp.listen(PORT, () => {\n    console.log(`Server is running on http://localhost:${PORT}`);\n});\n"
+        }
+    ]
+}

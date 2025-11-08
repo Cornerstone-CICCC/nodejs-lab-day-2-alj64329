@@ -1,0 +1,26 @@
+{
+    "sourceFile": "frontend/src/pages/profile.astro",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1762538730770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762538901054,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,17 @@\n import Layout from \"../layouts/Layout.astro\";\r\n import Header from \"../components/Header.astro\";\r\n ---\r\n \r\n-<Layout>\r\n+<!doctype html>\r\n+<html lang=\"en\">\r\n+  <head>\r\n+    <meta charset=\"UTF-8\" />\r\n+    <meta name=\"viewport\" content=\"width=device-width\" />\r\n+    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\" />\r\n+    <meta name=\"generator\" content={Astro.generator} />\r\n+    <title>Astro Basics</title>\r\n+  </head>\r\n   <body>\r\n     <Header />\r\n   </body>\r\n-</Layout>\r\n+</html>\r\n"
+                },
+                {
+                    "date": 1762538962626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,6 +13,50 @@\n     <title>Astro Basics</title>\r\n   </head>\r\n   <body>\r\n     <Header />\r\n+        <div class=\"profile\" style=\"display: none;\">\r\n+      <h1>Profile</h1>\r\n+      <h3>Username: <span id=\"usernameSpan\"></span></h3>\r\n+      <button id=\"btn-logout\">Log Out</button>\r\n+    </div>\r\n+\r\n+    <script>\r\n+      // Get account details\r\n+      const checkAccount = async () => {\r\n+        try {\r\n+          const res = await fetch(\"http://localhost:3000/users/account\", {\r\n+            credentials: \"include\" // include cookies\r\n+          })\r\n+          const data = await res.json()\r\n+          if (!res.ok) {\r\n+            alert(data.message)\r\n+            window.location.href = \"/\"\r\n+            return\r\n+          }\r\n+          console.log(data)\r\n+          const profile = document.querySelector('.profile') as HTMLDivElement\r\n+          profile.style.display = \"block\"\r\n+          const usernameSpan = document.getElementById('usernameSpan') as HTMLSpanElement\r\n+          usernameSpan.textContent = data.username\r\n+        } catch (err) {\r\n+          console.error(err)\r\n+        }\r\n+      }\r\n+\r\n+      checkAccount()\r\n+\r\n+      // Log out\r\n+      const btnLogout = document.getElementById('btn-logout') as HTMLButtonElement\r\n+      btnLogout.addEventListener('click', async () => {\r\n+        try {\r\n+          await fetch(\"http://localhost:3500/users/logout\", {\r\n+            credentials: \"include\"\r\n+          })\r\n+          window.location.href = \"/\" // redirect to home\r\n+        } catch (err) {\r\n+          console.error(err)\r\n+        }\r\n+      })\r\n+    </script>\r\n   </body>\r\n </html>\r\n"
+                }
+            ],
+            "date": 1762538730770,
+            "name": "Commit-0",
+            "content": "---\r\nimport Layout from \"../layouts/Layout.astro\";\r\nimport Header from \"../components/Header.astro\";\r\n\r\n---\r\n\r\n<Layout>\r\n    <body>\r\n        <Header/>\r\n    </body>\r\n</Layout>"
+        }
+    ]
+}

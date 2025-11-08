@@ -1,0 +1,22 @@
+{
+    "sourceFile": "backend/src/routes/user.routes.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1762533930389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762535889825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,12 @@\n import { Router } from \"express\";\r\n+import { checkLogin, checkLogout } from \"../middleware/auth.middleware\";\r\n+import userController from \"../controllers/user.controller\";\r\n \r\n const userRouter = Router()\r\n \r\n+userRouter.post('/signup', checkLogout, userController.addUser)\r\n+userRouter.post('/login', checkLogout, userController.loginUser)\r\n+userRouter.get('/logout', checkLogin, userController.logout)\r\n+userRouter.get('/check-auth', checkLogin, userController.getUserByUsername)\r\n+\r\n export default userRouter\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1762533930389,
+            "name": "Commit-0",
+            "content": "import { Router } from \"express\";\r\n\r\nconst userRouter = Router()\r\n\r\nexport default userRouter"
+        }
+    ]
+}
