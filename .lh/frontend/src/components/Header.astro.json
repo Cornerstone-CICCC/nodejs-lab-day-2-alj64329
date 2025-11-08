@@ -1,0 +1,26 @@
+{
+    "sourceFile": "frontend/src/components/Header.astro",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1762537812220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762537920067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,4 +5,10 @@\n     <li><a href=\"/login\">LogIn</a></li>\r\n     <li><a href=\"/profile\">Profile</a></li>\r\n   </nav>\r\n </header>\r\n+\r\n+<style>\r\n+    header{\r\n+        padding: 2rem;\r\n+    }\r\n+</style>\r\n"
+                },
+                {
+                    "date": 1762537943894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,9 @@\n <style>\r\n   header {\r\n     padding: 2rem;\r\n   }\r\n+  nav{\r\n+    display: flex;\r\n+    justify-content: space-around;\r\n+  }\r\n </style>\r\n"
+                }
+            ],
+            "date": 1762537812220,
+            "name": "Commit-0",
+            "content": "<header>\r\n    <nav>\r\n        <li><a href=\"/\">Home</a></li>\r\n        <li><a href=\"/register\">Register</a></li>\r\n        <li><a href=\"/login\">LogIn</a></li>\r\n        <li><a href=\"/profile\">Profile</a></li>\r\n    </nav>\r\n</header>"
+        }
+    ]
+}

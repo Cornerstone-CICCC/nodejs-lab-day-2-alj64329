@@ -1,0 +1,30 @@
+{
+    "sourceFile": "frontend/src/pages/index.astro",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1762536629647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762537012405,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,10 @@\n+---\r\n+import Layout from \"../layouts/Layout.astro\";\r\n+\r\n+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\r\n+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\r\n+---\r\n+\r\n+<Layout>\r\n+  \r\n+</Layout>\r\n"
+                },
+                {
+                    "date": 1762537063636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,5 +4,9 @@\n // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\r\n // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\r\n ---\r\n \r\n-<Layout />\r\n+<Layout>\r\n+  <div class=\"container\">\r\n+    <div><a href=\"/register\">Create Account</a></div>\r\n+  </div>\r\n+</Layout>\r\n"
+                },
+                {
+                    "date": 1762537080776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,9 @@\n ---\r\n \r\n <Layout>\r\n   <div class=\"container\">\r\n-    <div><a href=\"/register\">Create Account</a></div>\r\n+    <div class=\"btn\">\r\n+        <a href=\"/register\">Create Account</a>\r\n+    </div>\r\n   </div>\r\n </Layout>\r\n"
+                }
+            ],
+            "date": 1762536629647,
+            "name": "Commit-0",
+            "content": "---\nimport Welcome from '../components/Welcome.astro';\nimport Layout from '../layouts/Layout.astro';\n\n// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\n// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\n---\n\n<Layout>\n\n</Layout>\n"
+        }
+    ]
+}

@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+  </head>
+  <body>
+    <Header />
+    <div class="profile" style="display: none;">
+      <h1>Profile</h1>
+      <h3>Username: <span id="usernameSpan"></span></h3>
+      <button id="btn-logout">Log Out</button>
+    </div>
+
+    <script>
+      // Get account details
+      const checkAccount = async () => {
+        try {
+          const res = await fetch("http://localhost:3500/users/check-auth", {
+            credentials: "include", // include cookies
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            alert(data.message);
+            window.location.href = "/";
+            return;
+          }
+          console.log(data.user.username);
+          const profile = document.querySelector(".profile") as HTMLDivElement;
+          profile.style.display = "block";
+          const usernameSpan = document.getElementById(
+            "usernameSpan"
+          ) as HTMLSpanElement;
+          usernameSpan.textContent = data.user.username;
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      checkAccount();
+
+      // Log out
+      const btnLogout = document.getElementById(
+        "btn-logout"
+      ) as HTMLButtonElement;
+      btnLogout.addEventListener("click", async () => {
+        try {
+          await fetch("http://localhost:3500/users/logout", {
+            credentials: "include",
+          });
+          window.location.href = "/"; // redirect to home
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    </script>
+  </body>
+</html>

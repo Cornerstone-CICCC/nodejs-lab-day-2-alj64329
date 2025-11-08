@@ -1,0 +1,34 @@
+{
+    "sourceFile": "frontend/src/pages/register.astro",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1762536973896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762538009867,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n ---\r\n-import RegisterForm from '../components/RegisterForm.astro';\r\n-import Layout from '../layouts/Layout.astro';\r\n+import RegisterForm from \"../components/RegisterForm.astro\";\r\n+import Layout from \"../layouts/Layout.astro\";\r\n \r\n // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\r\n // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\r\n ---\r\n \r\n <Layout>\r\n-    <RegisterForm />\r\n+  <RegisterForm />\r\n </Layout>\r\n"
+                },
+                {
+                    "date": 1762538701865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,86 @@\n ---\r\n import RegisterForm from \"../components/RegisterForm.astro\";\r\n import Layout from \"../layouts/Layout.astro\";\r\n+import Header from \"../components/Header.astro\";\r\n \r\n // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\r\n // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\r\n ---\r\n \r\n <Layout>\r\n-  <RegisterForm />\r\n+    <body>\r\n+        <Header />\r\n+        <div class=\"form-container\">\r\n+  <h2>Sign Up</h2>\r\n+  <form id=\"form-signup\">\r\n+    <input type=\"text\" name=\"username\" placeholder=\"Username\" required />\r\n+    <input type=\"password\" name=\"password\" placeholder=\"Password\" required />\r\n+    <div class=\"name-inputs\">\r\n+      <input type=\"text\" name=\"firstname\" placeholder=\"First name\" required />\r\n+      <input type=\"text\" name=\"lastname\" placeholder=\"Last name\" required />\r\n+    </div>\r\n+    <button type=\"submit\">Create Account</button>\r\n+  </form>\r\n+</div>\r\n+  <script>\r\n+    const signUpForm = document.getElementById(\r\n+      \"form-signup\"\r\n+    ) as HTMLFormElement;\r\n+    signUpForm.addEventListener(\"submit\", async (e) => {\r\n+      e.preventDefault();\r\n+      const formData = new FormData(signUpForm);\r\n+      const username = formData.get(\"username\");\r\n+      const password = formData.get(\"password\");\r\n+      const firstname = formData.get(\"firstname\");\r\n+      const lastname = formData.get(\"lastname\");\r\n+\r\n+      try {\r\n+        const res = await fetch(\"http://localhost:3000/users/signup\", {\r\n+          method: \"POST\",\r\n+          headers: {\r\n+            \"Content-type\": \"application/json\",\r\n+          },\r\n+          body: JSON.stringify({\r\n+            username,\r\n+            password,\r\n+            firstname,\r\n+            lastname,\r\n+          }),\r\n+        });\r\n+        const data = await res.json();\r\n+        if (!res.ok) {\r\n+          // Check if status is not success (400, 500, ...)\r\n+          console.error(data.message);\r\n+          return;\r\n+        }\r\n+        alert(\"Success! You can now log in!\");\r\n+        signUpForm.reset();\r\n+      } catch (err) {\r\n+        console.error(err);\r\n+      }\r\n+    });\r\n+  </script>\r\n+\r\n+    </body>\r\n </Layout>\r\n+\r\n+<style>\r\n+  .form-container {\r\n+    padding-top: 5rem;\r\n+    display: flex;\r\n+    justify-content: center;\r\n+    flex-direction: column;\r\n+  }\r\n+\r\n+  #form-signup {\r\n+    width: fit-content;\r\n+    display: flex;\r\n+    flex-direction: column;\r\n+    justify-content: center;\r\n+    margin: 0 auto;\r\n+    gap: 1rem;\r\n+  }\r\n+  h2 {\r\n+    text-align: center;\r\n+  }\r\n+</style>\r\n"
+                },
+                {
+                    "date": 1762538911633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,17 @@\n // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\r\n // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\r\n ---\r\n \r\n-<Layout>\r\n+<!doctype html>\r\n+<html lang=\"en\">\r\n+  <head>\r\n+    <meta charset=\"UTF-8\" />\r\n+    <meta name=\"viewport\" content=\"width=device-width\" />\r\n+    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\" />\r\n+    <meta name=\"generator\" content={Astro.generator} />\r\n+    <title>Astro Basics</title>\r\n+  </head>\r\n   <body>\r\n     <Header />\r\n     <div class=\"form-container\">\r\n       <h2>Sign Up</h2>\r\n@@ -70,9 +78,9 @@\n         }\r\n       });\r\n     </script>\r\n   </body>\r\n-</Layout>\r\n+</html>\r\n \r\n <style>\r\n   .form-container {\r\n     padding-top: 5rem;\r\n"
+                },
+                {
+                    "date": 1762539542178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n         const firstname = formData.get(\"firstname\");\r\n         const lastname = formData.get(\"lastname\");\r\n \r\n         try {\r\n-          const res = await fetch(\"http://localhost:3000/users/signup\", {\r\n+          const res = await fetch(\"http://localhost:3500/users/signup\", {\r\n             method: \"POST\",\r\n             headers: {\r\n               \"Content-type\": \"application/json\",\r\n             },\r\n"
+                }
+            ],
+            "date": 1762536973896,
+            "name": "Commit-0",
+            "content": "---\r\nimport RegisterForm from '../components/RegisterForm.astro';\r\nimport Layout from '../layouts/Layout.astro';\r\n\r\n// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build\r\n// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.\r\n---\r\n\r\n<Layout>\r\n    <RegisterForm />\r\n</Layout>\r\n"
+        }
+    ]
+}

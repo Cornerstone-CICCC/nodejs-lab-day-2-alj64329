@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+  </head>
+  <body>
+    <Header />
+    <div class="container">
+      <div class="btn">
+        <a href="/register">Create Account</a>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 5rem 2rem;
+  }
+  div.btn {
+    background-color: black;
+    width: fit-content;
+    height: fit-content;
+    padding: 0.8rem 1.3rem;
+    border-radius: 25px;
+  }
+
+  .btn a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+</style>

@@ -1,0 +1,34 @@
+{
+    "sourceFile": "backend/src/server.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1762533997595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1762535909492,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,43 @@\n+import express, { Request, Response, NextFunction } from 'express'\r\n+import cors from 'cors'\r\n+import cookieSession from 'cookie-session'\r\n+import dotenv from 'dotenv'\r\n+import userRouter from './routes/user.routes'\r\n+dotenv.config()\r\n+\r\n+const app = express()\r\n+\r\n+app.use(cors({\r\n+  origin: \"http://localhost:4322\", // Astro url\r\n+  credentials: true // Allow cookies from frontend\r\n+}))\r\n+if (!process.env.COOKIE_PRIMARY_KEY || !process.env.COOKIE_SECONDARY_KEY) {\r\n+  throw new Error(\"Missing cookie keys!\")\r\n+}\r\n+app.use(cookieSession({\r\n+  name: \"session\",\r\n+  keys: [\r\n+    process.env.COOKIE_PRIMARY_KEY,\r\n+    process.env.COOKIE_SECONDARY_KEY\r\n+  ],\r\n+  maxAge: 3 * 60 * 1000 // 3 mins\r\n+}))\r\n+app.use(express.json()) // Allow and parse JSON body\r\n+\r\n+// Routes\r\n+app.use('/users', userRouter)\r\n+\r\n+app.use((req: Request, res: Response, next: NextFunction) => {\r\n+  res.status(404).json({\r\n+    message: \"Invalid route!\"\r\n+  })\r\n+})\r\n+\r\n+// Start server\r\n+const PORT = process.env.PORT\r\n+if (!PORT) {\r\n+  throw new Error(\"Missing port!\")\r\n+}\r\n+app.listen(PORT, () => {\r\n+  console.log(`Server is running on http://localhost:${PORT}`)\r\n+})\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1762539314366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n const app = express()\r\n \r\n app.use(cors({\r\n-  origin: \"http://localhost:4322\", // Astro url\r\n+  origin: true, // Astro url\r\n   credentials: true // Allow cookies from frontend\r\n }))\r\n if (!process.env.COOKIE_PRIMARY_KEY || !process.env.COOKIE_SECONDARY_KEY) {\r\n   throw new Error(\"Missing cookie keys!\")\r\n@@ -39,47 +39,5 @@\n   throw new Error(\"Missing port!\")\r\n }\r\n app.listen(PORT, () => {\r\n   console.log(`Server is running on http://localhost:${PORT}`)\r\n-})\n-import express, { Request, Response, NextFunction } from 'express'\r\n-import cors from 'cors'\r\n-import cookieSession from 'cookie-session'\r\n-import dotenv from 'dotenv'\r\n-dotenv.config()\r\n-\r\n-const app = express()\r\n-\r\n-app.use(cors({\r\n-  origin: \"http://localhost:4322\", // Astro url\r\n-  credentials: true // Allow cookies from frontend\r\n-}))\r\n-if (!process.env.COOKIE_PRIMARY_KEY || !process.env.COOKIE_SECONDARY_KEY) {\r\n-  throw new Error(\"Missing cookie keys!\")\r\n-}\r\n-app.use(cookieSession({\r\n-  name: \"session\",\r\n-  keys: [\r\n-    process.env.COOKIE_PRIMARY_KEY,\r\n-    process.env.COOKIE_SECONDARY_KEY\r\n-  ],\r\n-  maxAge: 3 * 60 * 1000 // 3 mins\r\n-}))\r\n-app.use(express.json()) // Allow and parse JSON body\r\n-\r\n-// Routes\r\n-//app.use('/users', userRouter)\r\n-\r\n-app.use((req: Request, res: Response, next: NextFunction) => {\r\n-  res.status(404).json({\r\n-    message: \"Invalid route!\"\r\n-  })\r\n-})\r\n-\r\n-// Start server\r\n-const PORT = process.env.PORT\r\n-if (!PORT) {\r\n-  throw new Error(\"Missing port!\")\r\n-}\r\n-app.listen(PORT, () => {\r\n-  console.log(`Server is running on http://localhost:${PORT}`)\r\n })\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1762540344408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,12 +15,12 @@\n   throw new Error(\"Missing cookie keys!\")\r\n }\r\n app.use(cookieSession({\r\n   name: \"session\",\r\n-  keys: [\r\n-    process.env.COOKIE_PRIMARY_KEY,\r\n-    process.env.COOKIE_SECONDARY_KEY\r\n-  ],\r\n+  // keys: [\r\n+  //   process.env.COOKIE_PRIMARY_KEY,\r\n+  //   process.env.COOKIE_SECONDARY_KEY\r\n+  // ],\r\n   maxAge: 3 * 60 * 1000 // 3 mins\r\n }))\r\n app.use(express.json()) // Allow and parse JSON body\r\n \r\n"
+                },
+                {
+                    "date": 1762540367861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,12 +15,12 @@\n   throw new Error(\"Missing cookie keys!\")\r\n }\r\n app.use(cookieSession({\r\n   name: \"session\",\r\n-  // keys: [\r\n-  //   process.env.COOKIE_PRIMARY_KEY,\r\n-  //   process.env.COOKIE_SECONDARY_KEY\r\n-  // ],\r\n+  keys: [\r\n+    process.env.COOKIE_PRIMARY_KEY,\r\n+    process.env.COOKIE_SECONDARY_KEY\r\n+  ],\r\n   maxAge: 3 * 60 * 1000 // 3 mins\r\n }))\r\n app.use(express.json()) // Allow and parse JSON body\r\n \r\n"
+                }
+            ],
+            "date": 1762533997595,
+            "name": "Commit-0",
+            "content": "import express, { Request, Response, NextFunction } from 'express'\r\nimport cors from 'cors'\r\nimport cookieSession from 'cookie-session'\r\nimport dotenv from 'dotenv'\r\ndotenv.config()\r\n\r\nconst app = express()\r\n\r\napp.use(cors({\r\n  origin: \"http://localhost:4322\", // Astro url\r\n  credentials: true // Allow cookies from frontend\r\n}))\r\nif (!process.env.COOKIE_PRIMARY_KEY || !process.env.COOKIE_SECONDARY_KEY) {\r\n  throw new Error(\"Missing cookie keys!\")\r\n}\r\napp.use(cookieSession({\r\n  name: \"session\",\r\n  keys: [\r\n    process.env.COOKIE_PRIMARY_KEY,\r\n    process.env.COOKIE_SECONDARY_KEY\r\n  ],\r\n  maxAge: 3 * 60 * 1000 // 3 mins\r\n}))\r\napp.use(express.json()) // Allow and parse JSON body\r\n\r\n// Routes\r\n//app.use('/users', userRouter)\r\n\r\napp.use((req: Request, res: Response, next: NextFunction) => {\r\n  res.status(404).json({\r\n    message: \"Invalid route!\"\r\n  })\r\n})\r\n\r\n// Start server\r\nconst PORT = process.env.PORT\r\nif (!PORT) {\r\n  throw new Error(\"Missing port!\")\r\n}\r\napp.listen(PORT, () => {\r\n  console.log(`Server is running on http://localhost:${PORT}`)\r\n})"
+        }
+    ]
+}
